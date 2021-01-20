@@ -28,7 +28,7 @@ int parseCmd(char *cmd[], int num, int *in, int *out, int *log)
                 } else {
                     ret = -1;
                 }
-            } else if(tmp.find("-o") != std::string::npos && fo == 0)  {
+            } else if(tmp.find("-o") != std::string::npos && fo == 0) {
                 fo = 1;
                 string::const_iterator it = tmp.begin();
                 tmp = tmp.erase(0, 2);
@@ -53,7 +53,7 @@ int parseCmd(char *cmd[], int num, int *in, int *out, int *log)
 void usage(void)
 {
     cout << "Usage:" << endl << endl;
-    cout << "mainApp -i <input gpio number> -o <output gpio number> [--log]" << endl;
+    cout << "mainApp -i<input gpio number> -o<output gpio number> [--log]" << endl;
     cout << "   input gpio number: a positive integer representing " << endl;
     cout << "   the gpio number which will determine wheather the output gpio blink or not" << endl << endl;
     
