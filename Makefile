@@ -5,14 +5,16 @@ SRC=src
 SRCFILES=$(patsubst %,%/*.cpp,${SRC})
 INCFILES=$(patsubst %,%/*.h,${INC})
 
-CXX=g++
-CFLAGS=-Wall -I./${INC}
+#installed package g++-arm-linux-gnueabihf on ubuntu
+CXX=arm-linux-gnueabihf-g++
+SDKINCPATH=/usr/arm-linux-gnueabihf/include
+CFLAGS=-Wall -I./${INC} -I${SDKINCPATH}
 
 dd: $(eval SHELL:=/bin/bash)
 	echo ${SRCFILES}
 	echo ${INCFILES}
 	echo ${CFLAGS}
-
+	echo ${SDKINCPATH}
 
 all:
 	${CXX} ${CFLAGS} ${SRCFILES} -o ${BUILD}/mainApp
