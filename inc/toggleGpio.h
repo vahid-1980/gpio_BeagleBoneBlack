@@ -7,10 +7,15 @@
 #include <condition_variable>
 #include <mutex>
 #include <atomic>
+#include <ctime>
+#include <chrono>
 
+#define GPIO_SYSFS "/sys/class/gpio/gpio"
+#define GPIO_LOGPATH "/tmp/log_gpio"
 
 using namespace std;
 
+//to be used to continue/end the threads from outside
 extern atomic<bool> ctrl_c;
 
 class ToggleGpio {
@@ -23,12 +28,14 @@ class ToggleGpio {
         
         string filePath_output;
         string filePath_input;
-//        string filePath_output = GPIO_SYSFS + to_string(output_gpio) + "/value";
+        string filePath_log;
 
         thread *tglThreadPtr = nullptr;
         thread *polThreadPtr = nullptr;
+        
         ofstream gpio_out_value;
         ifstream gpio_in_value;
+        ofstream log_stream;
 
     public:
         int time;
@@ -47,16 +54,11 @@ class ToggleGpio {
         */
         int init(void);
         
-        /*
-        if init has ended success fully start will run the thread for toggling gpio.
-        also will poll the input to run/stop the thread.
-        */
-        void start(void);
-        void stop(void);
-
+        //callable for tglThread
         void toggling();
+
+        //callable for polThread
         void polling();
-        friend void ctrlCHandler(int sig);
 
         ~ToggleGpio();
 };

@@ -69,7 +69,7 @@ void usage(void)
 void ctrlCHandler(int sig)
 { 
     ctrl_c = true;
-    cout << "got interrupted!" << endl; 
+    cout << " got interrupted!" << endl; 
 }
 
 int main(int argc, char *argv[]) 
