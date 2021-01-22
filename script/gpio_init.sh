@@ -27,10 +27,9 @@ fi
 
 if [ -d "/sys/class/gpio/gpio"$2 ]; then
 	echo "out" > /sys/class/gpio/gpio$2/direction && 
-	echo "1" > /sys/class/gpio/gpio$2/value
+	echo "0" > /sys/class/gpio/gpio$2/value
 else
 	echo "something's wrong with gpio $2"
 	exit -1
 fi
 
-echo 0 > /sys/class/gpio/gpio$2/value

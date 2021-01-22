@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 
     if(0 != parseCmd(argv, argc, &x, &y, &z)){
         usage();
-        ret =-1;
+        return -1;
     } else {
         cout << "log= " << z << endl;
         cout << "in= " << x << endl;
