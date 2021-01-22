@@ -1,10 +1,13 @@
 #include <iostream>
 #include <string>
+#include <signal.h>
 
 #include "toggleGpio.h"
 
 
 using namespace std;
+
+atomic<bool> ctrl_c;
 
 int parseCmd(char *cmd[], int num, int *in, int *out, int *log)
 {
@@ -63,20 +66,32 @@ void usage(void)
     cout << "   --log: optional, if used, will print a time stamp in each output gpio toggle on a text file in /tmp/<output gpio number>.txt" << endl;
 }
 
+void ctrlCHandler(int sig)
+{ 
+    ctrl_c = true;
+    cout << "got interrupted!" << endl; 
+}
 
 int main(int argc, char *argv[]) 
 {
     int x = 0, y = 0, z = 0;
     int ret = 0;
 
+    ctrl_c = false;
+
+    signal(SIGINT, ctrlCHandler);
+
     if(0 != parseCmd(argv, argc, &x, &y, &z)){
         usage();
         ret =-1;
     } else {
-cout << "log= " << z << endl;
-cout << "in= " << x << endl;
-cout << "out= " << y << endl;
+        cout << "log= " << z << endl;
+        cout << "in= " << x << endl;
+        cout << "out= " << y << endl;
     }
+
+    ToggleGpio toggleGpio(&x, &y, &z);
+    toggleGpio.init();
 
     return ret;
 }

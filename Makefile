@@ -8,7 +8,7 @@ INCFILES=$(patsubst %,%/*.h,${INC})
 #installed package g++-arm-linux-gnueabihf on ubuntu
 CXX=arm-linux-gnueabihf-g++
 SDKINCPATH=/usr/arm-linux-gnueabihf/include
-CFLAGS=-Wall -I./${INC} -I${SDKINCPATH}
+CFLAGS=-Wall -I${SDKINCPATH} -I${INC} -pthread
 
 dd: $(eval SHELL:=/bin/bash)
 	echo ${SRCFILES}
