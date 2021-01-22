@@ -1,3 +1,11 @@
-[unit]
+[Unit]
+Description=It run mainApp as a service.
+#Before=
+#After=
 
-[service]
+[Service]
+ExecStart=/usr/local/bin/mainApp -o67 -i68 --log
+Type=forking
+
+[Install]
+WantedBy=default.target

@@ -1,9 +1,13 @@
 #include <iostream>
 #include <string>
 #include <signal.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include "toggleGpio.h"
 
+//if want to compile as a daemon and run with systemd, uncomment next line
+//#define DAEMON
 
 using namespace std;
 
@@ -76,10 +80,17 @@ int main(int argc, char *argv[])
 {
     int x = 0, y = 0, z = 0;
     int ret = 0;
+    
+#ifdef DAEMON
+    int i=fork();
+	if (i<0) exit(1); /* fork error */
+	if (i>0) exit(0); /* we exit! */
+#endif
 
     ctrl_c = false;
 
     signal(SIGINT, ctrlCHandler);
+    signal(SIGTERM, ctrlCHandler);
 
     if(0 != parseCmd(argv, argc, &x, &y, &z)){
         usage();
