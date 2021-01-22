@@ -7,7 +7,7 @@
 #include "toggleGpio.h"
 
 //if want to compile as a daemon and run with systemd, uncomment next line
-//#define DAEMON
+#define DAEMON
 
 using namespace std;
 
